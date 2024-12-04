@@ -107,7 +107,7 @@ export default function App() {
     fetch("/.netlify/functions/api")
       .then((res) => res.json())
       .then((data) => {
-        console.log("Fetched Questions:", data); // Check the data format
+        // console.log("Fetched Questions:", data); // Check the data format
         dispatch({ type: "dataRecieved", payload: data.questions });
       })
       .catch((err) => {
