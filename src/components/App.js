@@ -93,12 +93,27 @@ export default function App() {
     (prev, curr) => prev + curr.points,
     0
   );
+  // const maxPossiblePoints = Array.isArray(questions)
+  //   ? questions.reduce((prev, curr) => prev + curr.points, 0)
+  //   : 0;
 
+  // useEffect(function () {
+  //   fetch("http://localhost:8000/questions")
+  //     .then((res) => res.json())
+  //     .then((data) => dispatch({ type: "dataRecieved", payload: data }))
+  //     .catch(() => dispatch({ type: "dataFailed" }));
+  // }, []);
   useEffect(function () {
-    fetch("http://localhost:8000/questions")
+    fetch("/.netlify/functions/api")
       .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataRecieved", payload: data }))
-      .catch(() => dispatch({ type: "dataFailed" }));
+      .then((data) => {
+        console.log("Fetched Questions:", data); // Check the data format
+        dispatch({ type: "dataRecieved", payload: data.questions });
+      })
+      .catch((err) => {
+        console.error("Fetch Error:", err);
+        dispatch({ type: "dataFailed" });
+      });
   }, []);
 
   return (
